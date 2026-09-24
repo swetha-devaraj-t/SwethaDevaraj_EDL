@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TriGrid | UAE AI Workload Carbon Orchestrator</title>
+    <!-- Tailwind CSS for modern enterprise styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header / Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-slate-950 text-xl shadow-lg shadow-emerald-500/20">3G</div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-tight">TriGrid <span class="text-xs font-normal text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 ml-2">B2B SaaS API</span></h1>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4 text-sm text-slate-400">
+                <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>UAE Data Centres: Online</span>
+                <span class="hidden md:inline bg-slate-800 px-3 py-1 rounded text-slate-300 font-mono text-xs">ID: MJ26DBM005</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-6 py-8 flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left 2 Columns: Interactive Controls & Simulator -->
+        <div class="lg:col-span-2 space-y-8">
+            
+            <!-- Hero Introduction Box -->
+            <div class="bg-gradient-to-r from-slate-900 to-slate-900/80 border border-slate-800 rounded-2xl p-6 relative overflow-hidden shadow-xl">
+                <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+                <h2 class="text-2xl font-bold tracking-tight mb-2">UAE's First AI Workload Carbon Orchestrator[cite: 1]</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    Intelligently routing enterprise AI and cloud workloads across UAE data centres in real time, selecting the lowest-carbon, lowest-cost compute window by reading nuclear, solar, and battery energy signals[cite: 1].
+                </p>
+                <div class="flex flex-wrap gap-2 text-xs font-medium">
+                    <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Barakah Nuclear (~12 gCO₂/kWh)[cite: 1]</span>
+                    <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Al Dhafra Solar (~20 gCO₂/kWh)[cite: 1]</span>
+                    <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">UAE PDPL Compliant[cite: 1]</span>
+                </div>
+            </div>
+
+            <!-- Interactive Workload Router Simulator -->
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="cpu" class="w-5 h-5 text-emerald-400"></i>
+                        <h3 class="font-semibold text-lg">AI Workload Routing Simulator</h3>
+                    </div>
+                    <span class="text-xs font-mono bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded border border-emerald-500/20">API Endpoint: /v1/route</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">Workload Type</label>
+                        <select id="workloadType" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 transition">
+                            <option value="llm_training">Large Language Model Training (100 GPU-hrs)</option>
+                            <option value="inference">Enterprise RAG Inference Cluster</option>
+                            <option value="batch_etl">Heavy Data Processing Pipeline</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">Target Energy Window</label>
+                        <select id="energyWindow" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 transition">
+                            <option value="solar_peak">Al Dhafra Solar Peak Window (High Solar)</option>
+                            <option value="nuclear_baseload">Barakah Nuclear Baseload (Constant 24/7)</option>
+                            <option value="battery_blend">Abu Dhabi Storage + Hybrid Blend</option>
+                            <option value="gas_baseline">Gas Peaker Baseline (Counterfactual)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="pdplToggle" checked class="w-4 h-4 rounded bg-slate-950 border-slate-800 text-emerald-500 focus:ring-emerald-500">
+                        <label for="pdplToggle" class="text-sm text-slate-300">Enforce UAE PDPL Data Residency Tag</label>
+                    </div>
+                    <button onclick="runSimulation()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold px-6 py-2.5 rounded-xl text-sm transition shadow-lg shadow-emerald-500/20 flex items-center space-x-2">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>Execute Routing API</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Simulation Output Results Panel -->
+            <div id="resultsPanel" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl hidden">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                    <h4 class="font-semibold text-emerald-400 flex items-center space-x-2">
+                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                        <span>Execution Success (&lt;50ms Response)</span>
+                    </h4>
+                    <span id="timestamp" class="text-xs font-mono text-slate-500"></span>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <span class="text-xs text-slate-400 block mb-1">Carbon Intensity</span>
+                        <span id="resCarbon" class="text-2xl font-bold font-mono text-white">--</span>
+                        <span class="text-xs text-emerald-400 block mt-1">vs 490 gCO₂ baseline[cite: 1]</span>
+                    </div>
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <span class="text-xs text-slate-400 block mb-1">Carbon Reduction</span>
+                        <span id="resReduction" class="text-2xl font-bold font-mono text-emerald-400">--</span>
+                        <span class="text-xs text-slate-400 block mt-1">Efficiency gain</span>
+                    </div>
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <span class="text-xs text-slate-400 block mb-1">Data Centre Node</span>
+                        <span id="resNode" class="text-lg font-bold font-mono text-white truncate block">--</span>
+                        <span id="resPdpl" class="text-xs text-emerald-400 block mt-1">PDPL Verified</span>
+                    </div>
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <span class="text-xs text-slate-400 block mb-1">Generated CECs</span>
+                        <span id="resCecs" class="text-xl font-bold font-mono text-amber-400">--</span>
+                        <span class="text-xs text-slate-400 block mt-1">Brokerage fee: 3%</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-slate-300 overflow-x-auto">
+                    <p class="text-slate-500 mb-1">// API Response Payload Preview</p>
+                    <pre id="jsonPayload" class="text-emerald-300"></pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Live ESG Audit & Financial Metrics -->
+        <div class="space-y-8">
+            
+            <!-- ESG & CEC Dashboard -->
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-lg flex items-center space-x-2">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+                        <span>ESG & CEC Audit Ledger</span>
+                    </h3>
+                    <span class="text-xs bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">2026 SCA Mandate Ready[cite: 1]</span>
+                </div>
+                <p class="text-xs text-slate-400 mb-6">Automated audit trail generated for enterprise compliance reporting and verifiable Clean Energy Certificates.</p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold text-xs">CEC</div>
+                            <div>
+                                <h5 class="text-sm font-medium text-slate-200">Total Verified Savings</h5>
+                                <span class="text-xs text-slate-400">Scope 3 Emission Offsets</span>
+                            </div>
+                        </div>
+                        <span class="font-mono font-bold text-emerald-400">142.8 tCO₂e</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold text-xs">PDPL</div>
+                            <div>
+                                <h5 class="text-sm font-medium text-slate-200">Data Sovereignty</h5>
+                                <span class="text-xs text-slate-400">UAE-Resident Storage Only</span>
+                            </div>
+                        </div>
+                        <span class="font-mono text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">100% Enforced</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 font-bold text-xs">API</div>
+                            <div>
+                                <h5 class="text-sm font-medium text-slate-200">Active Subscriptions</h5>
+                                <span class="text-xs text-slate-400">Enterprise SaaS Tier</span>
+                            </div>
+                        </div>
+                        <span class="font-mono font-bold text-white">AED 3,500/mo[cite: 1]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Projections Summary -->
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-lg flex items-center space-x-2">
+                        <i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i>
+                        <span>5-Year Financial Trajectory</span>
+                    </h3>
+                </div>
+                
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between items-center py-2 border-b border-slate-800">
+                        <span class="text-slate-400">Year 1 Revenue[cite: 1]</span>
+                        <span class="font-mono font-semibold text-white">AED 518K[cite: 1]</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-slate-800">
+                        <span class="text-slate-400">Year 3 Revenue & Margin[cite: 1]</span>
+                        <span class="font-mono font-semibold text-white">AED 4.75M <span class="text-xs text-emerald-400">(43% EBITDA)</span>[cite: 1]</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-slate-400">Year 5 Target[cite: 1]</span>
+                        <span class="font-mono font-semibold text-emerald-400">AED 22.02M <span class="text-xs text-white">(62% GM)</span>[cite: 1]</span>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                    <span>Founder: Swetha Devaraj[cite: 1]</span>
+                    <span class="font-mono text-emerald-400">Student ID: MJ26DBM005[cite: 1]</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/30 py-6 text-center text-xs text-slate-500">
+        <p>TriGrid Prototype &bull; Powered by Barakah Nuclear & Al Dhafra Solar Energy Trifecta[cite: 1]</p>
+    </footer>
+
+    <!-- Script to initialize Lucide icons and handle simulation logic -->
+    <script>
+        lucide.createIcons();
+
+        function runSimulation() {
+            const workload = document.getElementById('workloadType').value;
+            const windowType = document.getElementById('energyWindow').value;
+            const pdplChecked = document.getElementById('pdplToggle').checked;
+
+            let carbonIntensity = "12 gCO₂/kWh";
+            let reduction = "97.5%";
+            let nodeName = "Moro Hub / AWS Abu Dhabi";
+            let cecs = "4.2 CEC Units";
+
+            if (windowType === 'solar_peak') {
+                carbonIntensity = "20 gCO₂/kWh";
+                reduction = "95.9%";
+                cecs = "3.8 CEC Units";
+            } else if (windowType === 'battery_blend') {
+                carbonIntensity = "16 gCO₂/kWh";
+                reduction = "96.7%";
+                cecs = "4.0 CEC Units";
+            } else if (windowType === 'gas_baseline') {
+                carbonIntensity = "490 gCO₂/kWh";
+                reduction = "0.0%";
+                cecs = "0.0 CEC Units";
+            }
+
+            document.getElementById('resCarbon').innerText = carbonIntensity;
+            document.getElementById('resReduction').innerText = reduction;
+            document.getElementById('resNode').innerText = nodeName;
+            document.getElementById('resCecs').innerText = cecs;
+            document.getElementById('timestamp').innerText = new Date().toISOString().replace('T', ' ').substring(0, 19) + " UTC";
+
+            const payload = {
+                "status": "success",
+                "routing_id": "trigrid_rt_" + Math.random().toString(36).substring(2, 9),
+                "workload_profile": workload,
+                "selected_energy_window": windowType,
+                "metrics": {
+                    "carbon_intensity_gco2_kwh": carbonIntensity,
+                    "baseline_comparison": "EWEC Gas Peaker (490 gCO₂/kWh)[cite: 1]",
+                    "carbon_reduction_pct": reduction
+                },
+                "compliance": {
+                    "uae_pdpl_enforced": pdplChecked,
+                    "data_residency": "UAE_ON_PREM_SECURE",
+                    "audit_trail_hash": "0x8f9c...3a12"
+                },
+                "certificates": {
+                    "clean_energy_certificates_generated": cecs,
+                    "brokerage_fee_applied": "3%"
+                }
+            };
+
+            document.getElementById('jsonPayload').innerText = JSON.stringify(payload, null, 2);
+            document.getElementById('resultsPanel').classList.remove('hidden');
+            document.getElementById('resultsPanel').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
